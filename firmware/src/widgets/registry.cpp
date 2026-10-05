@@ -1,14 +1,10 @@
-// Реестр виджетов — таблица указателей на Spec, каждый определён в своём
-// widgets/w_<type>.cpp. Добавить виджет = один такой файл + одна строка
-// здесь (docs/widgets.md).
+// Реестр виджетов — таблица указателей на Spec.
 #include "widget.h"
 
 #include <cstring>
 
 namespace widgets {
 
-// Определены в widgets/w_<type>.cpp — по одному Spec на файл, единственная
-// точка связи между реестром и конкретным виджетом.
 extern const Spec kMarketsSpec;
 extern const Spec kLimitsSpec;
 extern const Spec kAirSpec;
@@ -17,15 +13,13 @@ extern const Spec kMailSpec;
 extern const Spec kTodaySpec;
 extern const Spec kMetricSpec;
 extern const Spec kTextSpec;
+extern const Spec kElevatSpec;
 
 namespace {
 
-// Не constexpr: инициализаторы — адреса extern-объектов, определённых в
-// других файлах (w_<type>.cpp); порядок статической инициализации между
-// единицами трансляции для этого не важен — берём только адрес, не значение.
 const Spec* const kRegistry[] = {
-    &kMarketsSpec, &kLimitsSpec, &kAirSpec,   &kLimitsAirSpec,
-    &kMailSpec,    &kTodaySpec,  &kMetricSpec, &kTextSpec,
+    &kMarketsSpec, &kLimitsSpec, &kAirSpec, &kLimitsAirSpec,
+    &kMailSpec, &kTodaySpec, &kMetricSpec, &kTextSpec, &kElevatSpec,
 };
 const size_t kRegistryCount = sizeof(kRegistry) / sizeof(kRegistry[0]);
 
@@ -48,9 +42,6 @@ void required_slots(const Instance& instance, std::vector<String>& out) {
     const Spec* spec = find(instance.type.c_str());
     if (spec == nullptr) return;
 
-    // metric не несёт статического списка слотов в Spec — какой слот
-    // показывать, владелец выбирает при добавлении виджета на дашборд
-    // (Instance::slot), а не при регистрации типа.
     if (std::strcmp(spec->type, "metric") == 0) {
         if (instance.slot.length() > 0) out.push_back(instance.slot);
         return;
