@@ -6,25 +6,19 @@ namespace widgets {
 
 int16_t size_px(Size size) {
     switch (size) {
-        case Size::kS:
-            return 202;  // «Сегодня» в эталоне
-        case Size::kM:
-            return 296;  // «Рынки» в эталоне
+        case Size::kS: return 202;
+        case Size::kM: return 296;
         case Size::kFlex:
-        default:
-            return 0;
+        default: return 0;
     }
 }
 
 const char* size_to_string(Size size) {
     switch (size) {
-        case Size::kS:
-            return "S";
-        case Size::kM:
-            return "M";
+        case Size::kS: return "S";
+        case Size::kM: return "M";
         case Size::kFlex:
-        default:
-            return "flex";
+        default: return "flex";
     }
 }
 
@@ -38,9 +32,6 @@ bool size_from_string(const char* text, Size& size) {
 
 namespace {
 
-// Базовый набор — перенос существующего кода отрисовки (docs/widgets.md).
-// min_width — размеры уже этого страница не предлагает (недостаточно места
-// даже на минимальное содержимое виджета).
 constexpr TypeInfo kTypes[] = {
     {"markets", Size::kM, 202},
     {"limits", Size::kFlex, 202},
@@ -50,14 +41,13 @@ constexpr TypeInfo kTypes[] = {
     {"today", Size::kS, 202},
     {"metric", Size::kS, 120},
     {"text", Size::kS, 120},
+    {"elevat", Size::kS, 202},
 };
 constexpr size_t kTypesCount = sizeof(kTypes) / sizeof(kTypes[0]);
 
-// Таблица указателей — то же, что widgets::all() в widget.h (registry.cpp),
-// параллельная лёгкая версия без Spec.
 const TypeInfo* kTypePtrs[kTypesCount] = {
-    &kTypes[0], &kTypes[1], &kTypes[2], &kTypes[3],
-    &kTypes[4], &kTypes[5], &kTypes[6], &kTypes[7],
+    &kTypes[0], &kTypes[1], &kTypes[2], &kTypes[3], &kTypes[4],
+    &kTypes[5], &kTypes[6], &kTypes[7], &kTypes[8],
 };
 
 }  // namespace
